@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ToDo-android</string>
+    <string name="Connexion_Button_Validate">Valider</string>
+    <string name="Connexion_View_Title">Connexion</string>
+    <string name="Connexion_Hint_Username">nom d\'utilisateur</string>
+    <string name="Connexion_Hint_Password">Mots de passe</string>
+    <string name="Connexion_Button_Create">Creation</string>
+    <string name="Connexion_Text_ForgotPassword">Mot de passe oublié</string>
 </resources>
