@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Task_l {
-    String name;
+    public String todoName;
     List<Task> task_l = new ArrayList<>();
     public Task_l(String name){
-        this.name = name;
+        this.todoName = name;
     }
 }
