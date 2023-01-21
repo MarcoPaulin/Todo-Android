@@ -13,6 +13,13 @@
         android:theme="@style/Theme.ToDoandroid"
         tools:targetApi="31">
         <activity
+            android:name=".Dev.TodoActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Dev.HomeActivity"
             android:exported="false">
             <meta-data

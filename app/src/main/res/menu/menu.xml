@@ -6,7 +6,18 @@
     <item
         android:id="@+id/action_user"
         android:orderInCategory="300"
-        android:title="User"
         android:icon="@drawable/ic_setting"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="ifRoom">
+        <menu>
+            <item android:id="@+id/purple"
+                android:title="purple"
+                app:showAsAction="ifRoom"/>
+            <item android:id="@+id/blue"
+                android:title="blue"
+                app:showAsAction="ifRoom"/>
+            <item android:id="@+id/green"
+                android:title="green"
+                app:showAsAction="ifRoom"/>
+        </menu>
+    </item>
 </menu>

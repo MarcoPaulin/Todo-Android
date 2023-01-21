@@ -1,11 +1,18 @@
 package com.example.todo_android.Dev;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,19 +21,21 @@ import android.widget.ListView;
 import com.example.todo_android.Model.Todo_l;
 import com.example.todo_android.R;
 
+import java.util.List;
+
 public class HomeActivity extends AppCompatActivity {
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     private EditText newTodoName;
     private Button cancelButton, addButton;
-    private Todo_l todo_l = new Todo_l();
+    private Todo_l todo_l = Todo_l.getInstance();
+    private List<String> listName;
     private ArrayAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
 
 
         todo_l.AddTodo("test");
@@ -36,7 +45,44 @@ public class HomeActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, R.layout.todo_listview, todo_l.todoName_l);
         ListView listView = (ListView) findViewById(R.id.listViewTodo_l);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                movetoTodo();
+            }
+        });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+        ColorDrawable color;
+        switch (item.getItemId()) {
+            case R.id.green:
+
+                color = new ColorDrawable(Color.parseColor("#3aab17"));
+                actionBar.setBackgroundDrawable(color);
+                return true;
+            case R.id.blue:
+
+                color = new ColorDrawable(Color.parseColor("#116ab6"));
+                actionBar.setBackgroundDrawable(color);
+                return true;
+            case R.id.purple:
+
+                color = new ColorDrawable(Color.parseColor("#650e97"));
+                actionBar.setBackgroundDrawable(color);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    private void movetoTodo() {
+        Intent i = new Intent(this , TodoActivity.class);
+        startActivity(i);
+    }
+
 
     //FirebaseAuth.getInstance().signOut();
 
