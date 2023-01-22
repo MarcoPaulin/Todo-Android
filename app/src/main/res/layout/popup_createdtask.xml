@@ -8,13 +8,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nouvelle Todo"/>
+        android:text="Nouvelle tache"/>
 
     <EditText
-        android:id="@+id/new_todo_name"
+        android:id="@+id/new_task_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="nom de la nouvelle liste Todo" />
+        android:hint="nom de la nouvelle Tache" />
     <Space
         android:layout_width="wrap_content"
         android:layout_height="10dp"/>

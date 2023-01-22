@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.todo_android.Model.Todo_l;
 import com.example.todo_android.R;
@@ -37,17 +38,13 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
-        todo_l.AddTodo("test");
-        todo_l.AddTodo("test1");
-        todo_l.AddTodo("test2");
-
         adapter = new ArrayAdapter<>(this, R.layout.todo_listview, todo_l.todoName_l);
         ListView listView = (ListView) findViewById(R.id.listViewTodo_l);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                todo_l.currentTodo = position;
                 movetoTodo();
             }
         });

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+            android:columnCount="8"
+        android:alignmentMode="alignBounds">
+
+
+        <CheckBox
+            android:id="@+id/switch1"
+
+            android:layout_weight="1"
+            android:textSize="20dp"
+            android:layout_column="0"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_column="1"
+            android:layout_columnWeight="01"
+            android:layout_weight="1"
+
+            android:paddingStart="50dp"
+            android:text="TextView"
+
+            android:textSize="20dp" />
+
+</GridLayout>

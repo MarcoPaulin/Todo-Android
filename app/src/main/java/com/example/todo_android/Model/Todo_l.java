@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Todo_l {
-    private List<Task_l> todo_l;
+    public List<Task_l> todo_l;
     public List<String> todoName_l;
+    public int currentTodo;
 
 
 
     private Todo_l() {
         todo_l = new ArrayList<Task_l>();
         todoName_l = new ArrayList<String>();
+        currentTodo = 0;
     }
 
     private static Todo_l INSTANCE = new Todo_l();

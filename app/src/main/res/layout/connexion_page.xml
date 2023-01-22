@@ -87,22 +87,26 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <Button
-                    android:id="@+id/ValidateButton"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:onClick="ValidateButton_Click"
-                    android:text="@string/Connexion_Button_Validate"/>
-                <Space
-                    android:layout_width="25dp"
-                    android:layout_height="0dp"/>
-                <Button
                     android:id="@+id/CreateButton"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:onClick="CreateButton_Click"
                     android:text="@string/Connexion_Button_Create"/>
+
+                <Space
+                    android:layout_width="25dp"
+                    android:layout_height="0dp"/>
+
+                <Button
+                    android:id="@+id/ValidateButton"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:onClick="ValidateButton_Click"
+                    android:text="@string/Connexion_Button_Validate"/>
+
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
