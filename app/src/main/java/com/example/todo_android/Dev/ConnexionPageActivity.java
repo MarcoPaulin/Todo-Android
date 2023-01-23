@@ -1,8 +1,10 @@
 package com.example.todo_android.Dev;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +38,20 @@ public class ConnexionPageActivity extends AppCompatActivity {
         inputEmail = findViewById(R.id.email);
         error = findViewById(R.id.error);
         inputPwd = findViewById(R.id.password);
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setMessage("Êtes-vous sur de vouloir quitter l'application ?");
+        dlgAlert.setTitle("Quitter");
+        dlgAlert.setPositiveButton("Oui",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                ConnexionPageActivity.this.finish();
+            }
+        });
+        dlgAlert.setNegativeButton("Non", null);
+        dlgAlert.create().show();
     }
 
     @Override

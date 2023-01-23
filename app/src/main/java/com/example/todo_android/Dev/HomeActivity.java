@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -48,6 +49,20 @@ public class HomeActivity extends AppCompatActivity {
                 movetoTodo();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setMessage("Êtes-vous sur de vouloir vous déconnecter ?");
+        dlgAlert.setTitle("Déconnexion");
+        dlgAlert.setPositiveButton("Oui",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                HomeActivity.this.finish();
+            }
+        });
+        dlgAlert.setNegativeButton("Non", null);
+        dlgAlert.create().show();
     }
 
     @Override
