@@ -1,5 +1,23 @@
 package com.example.todo_android.Model;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+
+import org.json.JSONObject;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +32,8 @@ public class Todo_l {
         todo_l = new ArrayList<Task_l>();
         todoName_l = new ArrayList<String>();
         currentTodo = 0;
+
+
     }
 
     private static Todo_l INSTANCE = new Todo_l();
@@ -42,4 +62,79 @@ public class Todo_l {
         }
         return (todoName_L);
     }
+
+    public String writeJson(boolean write, Context context) {
+        String Filepath = context.getFilesDir().getAbsolutePath() + "/" + "TodoData.json";
+        Gson gson = new GsonBuilder().serializeNulls()
+                .disableHtmlEscaping()
+                .setPrettyPrinting()
+                .create();
+        Type listType = new TypeToken<Todo_l>(){}.getType();
+        String jsonResult = gson.toJson(this, listType);
+        if (write) {
+            try {
+
+                File file = new File(Filepath);
+                file.delete();
+                /*
+                // Open given file in append mode by creating an
+                // object of BufferedWriter class
+                File file = new File(Filepath);
+                BufferedWriter out = new BufferedWriter(
+                        new FileWriter(file, true));
+
+                // Writing on output stream
+                out.write(jsonResult);
+                // Closing the connection
+                out.close();*/
+                create(context, "TodoData.json", jsonResult);
+            } catch (Exception e) {
+                // Display message when exception occurs
+                System.out.println("exception occurred" + e);
+            }
+        }
+
+        // Catch block to handle the exceptions
+
+        return  (jsonResult);
+
+    }
+
+    public void setTodo(Todo_l recover) {
+        this.todo_l = recover.todo_l;
+        this.currentTodo = recover.currentTodo;
+        this.todoName_l = recover.todoName_l;
+    }
+
+    public void recoverTodo(String json){
+        try {
+            Gson gson = new GsonBuilder().serializeNulls()
+                    .disableHtmlEscaping()
+                    .setPrettyPrinting()
+                    .create();
+            JSONObject jsonObject = new JSONObject(json);
+            Type listType = new TypeToken<Todo_l>(){}.getType();
+            Todo_l recover =  gson.fromJson(jsonObject.toString(), listType);
+            setTodo(recover);
+            Log.d("test", recover.toString());
+        } catch (Exception e) {
+            System.out.println("exception occurred" + e);
+        }
+    }
+
+    private boolean create(Context context, String fileName, String jsonString){
+        try {
+            FileOutputStream fos = context.openFileOutput(fileName, context.MODE_APPEND);
+            if (jsonString != null) {
+                fos.write(jsonString.getBytes());
+            }
+            fos.close();
+            return true;
+        } catch (FileNotFoundException fileNotFound) {
+            return false;
+        } catch (IOException ioException) {
+            return false;
+        }
+    }
+
 }

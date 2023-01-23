@@ -16,6 +16,8 @@ import com.example.todo_android.Model.Task;
 import com.example.todo_android.Model.Todo_l;
 import com.example.todo_android.R;
 
+import org.json.JSONObject;
+
 public class TodoActivity extends AppCompatActivity {
 
     private AlertDialog.Builder dialogBuilder;
@@ -56,8 +58,11 @@ public class TodoActivity extends AppCompatActivity {
             if (newTaskName != null ) {
                 todo_l.todo_l.get(todo_l.currentTodo).task_l.add(new Task(newTaskName.getText().toString()));
                 adapter.notifyDataSetChanged();
+                todo_l.writeJson(true, this);
             }
             dialog.dismiss();
         });
+
     }
+
 }

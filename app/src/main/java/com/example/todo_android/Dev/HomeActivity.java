@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,6 +24,14 @@ import android.widget.TextView;
 import com.example.todo_android.Model.Todo_l;
 import com.example.todo_android.R;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -39,6 +48,19 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        boolean isFilePresent = isFilePresent(this, "TodoData.json");
+        if(isFilePresent) {
+            String jsonString = read(this, "TodoData.json");
+            todo_l.recoverTodo(jsonString);
+        } else {
+            try {
+                boolean isFileCreated = create(this, "TodoData.json", todo_l.writeJson(false, this));
+             } catch (Exception e) {
+            // Display message when exception occurs
+                System.out.println("exception occurred" + e);
+            }
+
+        }
         adapter = new ArrayAdapter<>(this, R.layout.todo_listview, todo_l.todoName_l);
         ListView listView = (ListView) findViewById(R.id.listViewTodo_l);
         listView.setAdapter(adapter);
@@ -49,6 +71,7 @@ public class HomeActivity extends AppCompatActivity {
                 movetoTodo();
             }
         });
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -124,10 +147,52 @@ public class HomeActivity extends AppCompatActivity {
             if (newTodoName != null ) {
                 todo_l.AddTodo(newTodoName.getText().toString());
                 adapter.notifyDataSetChanged();
+                todo_l.writeJson(true, this );
             }
             dialog.dismiss();
         });
 
+
+    }
+
+    private String read(Context context, String fileName) {
+        try {
+            FileInputStream fis = context.openFileInput(fileName);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader bufferedReader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+            }
+            return sb.toString();
+        } catch (FileNotFoundException fileNotFound) {
+            return null;
+        } catch (IOException ioException) {
+            return null;
+        }
+    }
+
+    private boolean create(Context context, String fileName, String jsonString){
+        try {
+            FileOutputStream fos = context.openFileOutput(fileName, context.MODE_APPEND);
+            if (jsonString != null) {
+                fos.write(jsonString.getBytes());
+            }
+            fos.close();
+            return true;
+        } catch (FileNotFoundException fileNotFound) {
+            return false;
+        } catch (IOException ioException) {
+            return false;
+        }
+
+    }
+
+    public boolean isFilePresent(Context context, String fileName) {
+        String path = context.getFilesDir().getAbsolutePath() + "/" + fileName;
+        File file = new File(path);
+        return file.exists();
     }
 
 }
