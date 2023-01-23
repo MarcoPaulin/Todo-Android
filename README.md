@@ -2,7 +2,7 @@ Liste des fonctionnalités implémentées :
 <br>
 [ ] Utilisation de l'Api Preference
 <br>
-[ ] Ecriture/lecture dans un Fichier
+[V] Ecriture/lecture dans un Fichier : fichier json ( fichier Todo_l, homeActivity, TodoActivity)
 <br>
 [ ] Utilisation de SQLite
 <br>
