@@ -49,11 +49,20 @@ public class ConnexionPageActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.information, menu);
+        return true;
+    }
+
+    @Override
     public void onResume(){
         super.onResume();
         get_appBarColor();
 
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -71,25 +80,18 @@ public class ConnexionPageActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_user) {
-            Log.d("test", "etonament ça marche");
+        if (id == R.id.action_info) {
+            Intent switchActivityIntent = new Intent(this, InformationActivity.class);
+            startActivity(switchActivityIntent);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void ForgotPassword_Click(View v) {
-        Log.d("test","forgotPassword");
-        Intent switchActivityIntent = new Intent(this, ForgetPasswordActivity.class);
-        startActivity(switchActivityIntent);;
-    }
     public void ValidateButton_Click(View v) {
         String email = inputEmail.getText().toString();
         String password = inputPwd.getText().toString();
