@@ -76,26 +76,11 @@ public class Todo_l {
 
                 File file = new File(Filepath);
                 file.delete();
-                /*
-                // Open given file in append mode by creating an
-                // object of BufferedWriter class
-                File file = new File(Filepath);
-                BufferedWriter out = new BufferedWriter(
-                        new FileWriter(file, true));
-
-                // Writing on output stream
-                out.write(jsonResult);
-                // Closing the connection
-                out.close();*/
                 create(context, "TodoData.json", jsonResult);
             } catch (Exception e) {
-                // Display message when exception occurs
                 System.out.println("exception occurred" + e);
             }
         }
-
-        // Catch block to handle the exceptions
-
         return  (jsonResult);
 
     }

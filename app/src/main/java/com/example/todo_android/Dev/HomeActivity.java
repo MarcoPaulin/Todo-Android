@@ -3,11 +3,11 @@ package com.example.todo_android.Dev;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,7 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.todo_android.Model.Todo_l;
 import com.example.todo_android.R;
@@ -29,10 +28,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -41,12 +38,16 @@ public class HomeActivity extends AppCompatActivity {
     private EditText newTodoName;
     private Button cancelButton, addButton;
     private Todo_l todo_l = Todo_l.getInstance();
-    private List<String> listName;
     private ArrayAdapter adapter;
+    ActionBar actionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
+        actionBar = getSupportActionBar();
+        get_appBarColor();
 
         boolean isFilePresent = isFilePresent(this, "TodoData.json");
         if(isFilePresent) {
@@ -54,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
             todo_l.recoverTodo(jsonString);
         } else {
             try {
-                boolean isFileCreated = create(this, "TodoData.json", todo_l.writeJson(false, this));
+                create(this, "TodoData.json", todo_l.writeJson(false, this));
              } catch (Exception e) {
             // Display message when exception occurs
                 System.out.println("exception occurred" + e);
@@ -75,6 +76,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() { super.onStop(); todo_l.writeJson(true, this); }
+
+    @Override
+    protected void onDestroy() { super.onDestroy(); todo_l.writeJson(true, this); }
+
+    @Override
     public void onBackPressed() {
         AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
         dlgAlert.setMessage("Êtes-vous sur de vouloir vous déconnecter ?");
@@ -90,29 +97,54 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ActionBar actionBar;
-        actionBar = getSupportActionBar();
+        SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sh.edit();
+
         ColorDrawable color;
         switch (item.getItemId()) {
             case R.id.green:
-
                 color = new ColorDrawable(Color.parseColor("#3aab17"));
+                myEdit.putString("color", "green");
+                myEdit.commit();
                 actionBar.setBackgroundDrawable(color);
                 return true;
             case R.id.blue:
 
                 color = new ColorDrawable(Color.parseColor("#116ab6"));
                 actionBar.setBackgroundDrawable(color);
+                myEdit.putString("color", "blue");
+                myEdit.commit();
                 return true;
             case R.id.purple:
 
                 color = new ColorDrawable(Color.parseColor("#650e97"));
                 actionBar.setBackgroundDrawable(color);
+                myEdit.putString("color", "purple");
+                myEdit.commit();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void get_appBarColor() {
+        SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+
+        String color_string = sh.getString("color", "");
+        ColorDrawable color;
+
+        if (color_string == "purple") {
+            color = new ColorDrawable(Color.parseColor("#650e97"));
+            actionBar.setBackgroundDrawable(color);
+        } else if (color_string == "green") {
+            color = new ColorDrawable(Color.parseColor("#3aab17"));
+            actionBar.setBackgroundDrawable(color);
+        } else {
+            color = new ColorDrawable(Color.parseColor("#116ab6"));
+            actionBar.setBackgroundDrawable(color);
+        }
+    }
+
     private void movetoTodo() {
         Intent i = new Intent(this , TodoActivity.class);
         startActivity(i);
@@ -173,18 +205,17 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private boolean create(Context context, String fileName, String jsonString){
+    private void create(Context context, String fileName, String jsonString){
         try {
             FileOutputStream fos = context.openFileOutput(fileName, context.MODE_APPEND);
             if (jsonString != null) {
                 fos.write(jsonString.getBytes());
             }
             fos.close();
-            return true;
         } catch (FileNotFoundException fileNotFound) {
-            return false;
+            System.out.println("exception occurred" + fileNotFound);
         } catch (IOException ioException) {
-            return false;
+            System.out.println("exception occurred" + ioException);
         }
 
     }

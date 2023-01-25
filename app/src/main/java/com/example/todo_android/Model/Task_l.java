@@ -8,7 +8,5 @@ public class Task_l {
     public ArrayList<Task> task_l = new ArrayList<>();
     public Task_l(String name){
         this.todoName = name;
-        this.task_l.add(new Task("test"));
-        this.task_l.add(new Task("test2"));
     }
 }

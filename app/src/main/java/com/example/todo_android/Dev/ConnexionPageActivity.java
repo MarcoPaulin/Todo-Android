@@ -1,11 +1,16 @@
 package com.example.todo_android.Dev;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,6 +33,7 @@ public class ConnexionPageActivity extends AppCompatActivity {
 
     EditText inputEmail, inputPwd;
     TextView error;
+    ActionBar actionBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,15 @@ public class ConnexionPageActivity extends AppCompatActivity {
         inputEmail = findViewById(R.id.email);
         error = findViewById(R.id.error);
         inputPwd = findViewById(R.id.password);
+        actionBar = getSupportActionBar();
+        get_appBarColor();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        get_appBarColor();
+
     }
 
     @Override
@@ -93,6 +108,24 @@ public class ConnexionPageActivity extends AppCompatActivity {
             });
         } else {
             error.setText("please could you enter an email and password");
+        }
+    }
+
+    public void get_appBarColor() {
+        SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+
+        String color_string = sh.getString("color", "");
+        ColorDrawable color;
+
+        if (color_string == "purple") {
+            color = new ColorDrawable(Color.parseColor("#650e97"));
+            actionBar.setBackgroundDrawable(color);
+        } else if (color_string == "green") {
+            color = new ColorDrawable(Color.parseColor("#3aab17"));
+            actionBar.setBackgroundDrawable(color);
+        } else {
+            color = new ColorDrawable(Color.parseColor("#116ab6"));
+            actionBar.setBackgroundDrawable(color);
         }
     }
 
