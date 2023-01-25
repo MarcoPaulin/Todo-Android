@@ -1,6 +1,6 @@
 Liste des fonctionnalités implémentées :
 <br>
-[ ] Utilisation de l'Api Preference
+[V] Utilisation de l'Api Preference :  bouton outils dans l'item bar (homeActivity) permettant de changer la couleur de l'AppBar qui est sauvegarder avec l'api <br> préférence et récupérer dans les autre vus même quand l'application est fermé
 <br>
 [V] Ecriture/lecture dans un Fichier : fichier json ( fichier Todo_l, homeActivity, TodoActivity)
 <br>
