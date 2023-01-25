@@ -1,7 +1,7 @@
 Utilisation :
 Pour utiliser l'application, dans un premier temps, créer un compte grace au bouton s'inscrire, une fois le compte fait vos accéder à la page principale où vous retrouverez en haut à droite un icon outils permettant de définir la couleur de la barre en haut.
 Vous retrouvez également en bas à droite un bouton permettant de créer une Todo liste, Définir le nom pour accéder à la page de la Todo, vous arriverez ainsi sur une page ou vous retrouverez en en haut au centre le nom de votre Todo, appuyer sur le bouton en bas pour définir vos premières taches.
-Vous retrouverez sur votre page principale toutes vos Todo reconnaissable par leurs noms vous avez juste à cliquer dessus pour retrouver et ajouter vos taches, une connexion est demander au début de chaque lancement
+Vous retrouverez sur votre page principale toutes vos Todo reconnaissable par leurs noms vous avez juste à cliquer dessus pour retrouver et ajouter vos taches, une connexion est demander au début de chaque lancement.
 
 Liste des fonctionnalités implémentées :
 <br>
